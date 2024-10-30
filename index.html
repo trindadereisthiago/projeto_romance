@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./assets/amar.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Seja uma cliente Romance</title>
+  </head>
+  <body>
+    <img src="./assets/amar.png" width="70px" height="auto" alt="logo" />
+    <h1>Seja uma cliente Romance</h1>
+    <form id="cadastroCliente">
+      <label for="nome">Nome Completo:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required />
+
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" name="endereco" />
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("cadastroCliente")
+        .addEventListener("submit", function (event) {
+          // Previne o comportamento padrão do formulário (recarregar a página)
+          event.preventDefault();
+
+          // Captura os valores dos campos
+          const nome = document.getElementById("nome").value;
+          const email = document.getElementById("email").value;
+          const telefone = document.getElementById("telefone").value;
+          const endereco = document.getElementById("endereco").value;
+
+          // Exibe os dados no console para simular o cadastro
+          console.log("Dados do Cliente:");
+          console.log("Nome Completo:", nome);
+          console.log("Email:", email);
+          console.log("Telefone:", telefone);
+          console.log("Endereço:", endereco);
+
+          // Chama uma função assíncrona para enviar os dados
+          enviarDados({ nome, email, telefone, endereco });
+        });
+
+      async function enviarDados(cliente) {
+        try {
+          const response = await fetch("/api/cadastro", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(cliente),
+          });
+
+          const result = await response.json();
+          console.log(result); // Exibe a resposta do backend
+        } catch (error) {
+          console.error("Erro ao enviar os dados:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
